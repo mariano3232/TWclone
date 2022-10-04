@@ -1,6 +1,15 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import {loginWithGithub} from './firebase/client.js'
 import styles from '../styles/Home.module.css'
+
+const handleClick=()=>{
+  loginWithGithub().then(user=>{
+    console.log('response : ',user)
+  }).catch(err=>{
+    console.log('ERR :',err)
+  })
+}
 
 export default function Home() {
   return (
@@ -16,6 +25,7 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <Link href="/timeline">Timeline</Link>
+        <button className={styles.gitHub} onClick={()=>handleClick()}>Login with github</button>
       </main>
 
     </div>
