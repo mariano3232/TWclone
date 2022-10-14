@@ -1,17 +1,31 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import {loginWithGithub} from './firebase/client.js'
+import {loginWithGithub,authStateChanged} from './firebase/client.js'
 import styles from '../styles/Home.module.css'
+import { useEffect, useState } from 'react'
 
-const handleClick=()=>{
-  loginWithGithub().then(user=>{
-    console.log('response : ',user)
-  }).catch(err=>{
-    console.log('ERR :',err)
-  })
-}
 
 export default function Home() {
+
+  const [user,setUser]=useState({})
+
+  useEffect(()=>{
+    authStateChanged(setUser)
+  },[])
+
+  const handleClick=()=>{
+    loginWithGithub().then(response=>{
+      let user=response.user
+      setUser({
+        username:user.displayName,
+        mail:user.email,
+        profilePicture:user.photoURL,
+      })
+    }).catch(err=>{
+      console.log('ERR :',err)
+    })
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,10 +36,19 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          twClone twClone
         </h1>
+        <div>
+          <h3>{user?.username}</h3>
+          <p>{user?.mail}</p>
+          <img src={user?.profilePicture} alt="" height="100px"/>
+        </div>
+    
         <Link href="/timeline">Timeline</Link>
-        <button className={styles.gitHub} onClick={()=>handleClick()}>Login with github</button>
+        {
+          user?null:<button className={styles.gitHub} onClick={()=>handleClick()}>Login with github</button>
+        }
+        <button onClick={()=>setUser(null)}>Log out</button>
       </main>
 
     </div>

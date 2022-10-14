@@ -1,5 +1,6 @@
+
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GithubAuthProvider,onAuthStateChanged} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJ6H2WuqHawCmrX981MpTHtqwm_WIgKfI",
@@ -13,8 +14,18 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig)
 
+const auth = getAuth();
+
+export const authStateChanged = (onChange) =>{
+  return onAuthStateChanged(auth, (user)=>{
+    onChange({
+      username:user.displayName,
+      mail:user.email,
+      profilePicture:user.photoURL,})
+  })
+}
+
 export const loginWithGithub=()=>{
-    const auth = getAuth();
     const githubProvider=new GithubAuthProvider();
     return signInWithPopup(auth,githubProvider)
 }
