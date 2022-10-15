@@ -10,11 +10,34 @@
     margin: auto;
 }
 
+.button{
+    position: fixed;
+    right: 20px;
+    top:20px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid black;
+    color: white;
+    border-radius: 50px;
+
+    background-color:rgb(42, 42, 142) ;
+}
+.button:hover{
+    cursor: pointer;
+}
+
 .tweetContainer{
+    position: relative;
+    width: 100%;
     font-size:small;
     display: flex;
-    background-color: white;
+    /* border: 2px solid blue; */
     border-top: 1px solid rgba(128, 128, 128, 0.592);
+}
+
+.text{
+    width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .avatar{

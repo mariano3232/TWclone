@@ -3,24 +3,29 @@ import Link from 'next/link'
 import {loginWithGithub,authStateChanged} from './firebase/client.js'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
+import useUser from '../Hooks/useUser.js'
 
 
-export default function Home() {
+export default function Login() {
 
-  const [user,setUser]=useState({})
 
-  useEffect(()=>{
-    authStateChanged(setUser)
-  },[])
+  // const [user,setUser]=useState({})
+
+  // useEffect(()=>{
+  //   authStateChanged(setUser)
+  // },[])
+
+  const user=useUser()
 
   const handleClick=()=>{
     loginWithGithub().then(response=>{
-      let user=response.user
-      setUser({
-        username:user.displayName,
-        mail:user.email,
-        profilePicture:user.photoURL,
-      })
+      // let user=response.user
+      // setUser({
+      //   username:user.displayName,
+      //   mail:user.email,
+      //   profilePicture:user.photoURL,
+      // })
+      console.log(response)
     }).catch(err=>{
       console.log('ERR :',err)
     })
@@ -41,14 +46,13 @@ export default function Home() {
         <div>
           <h3>{user?.username}</h3>
           <p>{user?.mail}</p>
-          <img src={user?.profilePicture} alt="" height="100px"/>
+          {/* <img src={user?.profilePicture} alt="" height="100px"/> */}
         </div>
     
-        <Link href="/timeline">Timeline</Link>
+        <Link href="/Home">Home</Link>
         {
           user?null:<button className={styles.gitHub} onClick={()=>handleClick()}>Login with github</button>
         }
-        <button onClick={()=>setUser(null)}>Log out</button>
       </main>
 
     </div>

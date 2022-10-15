@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styles from '../../styles/timeline.module.css'
 
-export default function Timeline({username}){
+export default function Home({username}){
 
     let [tweets,setTweets]=useState([])
 
@@ -18,8 +18,9 @@ export default function Timeline({username}){
 
     return (
     <div className={styles.container}>
-        <Link href="/">Home</Link>
+        <Link href="/">Login</Link>
         <h1>This is the timeline of {username}</h1>
+        <Link href="/post_tweet"><button className={styles.button}>Post</button></Link>
         {
             tweets.map(e=>{
                 return(
@@ -37,7 +38,7 @@ export default function Timeline({username}){
     )
 }
 
-Timeline.getInitialProps = ()=>{
+Home.getInitialProps = ()=>{
     return {
         username:'username',
     }
