@@ -1,6 +1,7 @@
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GithubAuthProvider,onAuthStateChanged} from 'firebase/auth';
+import { getAuth, signInWithPopup, GithubAuthProvider,onAuthStateChanged,signOut,GoogleAuthProvider} from 'firebase/auth';
+import { getFirestore, getDocs, addDoc, collection } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJ6H2WuqHawCmrX981MpTHtqwm_WIgKfI",
@@ -14,18 +15,58 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig)
 
+const db = getFirestore();
+
 const auth = getAuth();
 
-export const authStateChanged = (onChange) =>{
+export const authStateChanged = (setUser) =>{
   return onAuthStateChanged(auth, (user)=>{
-    onChange({
-      username:user.displayName,
-      mail:user.email,
-      profilePicture:user.photoURL,})
+    if (user){
+      setUser({
+        username:user.displayName,
+        mail:user.email,
+        profilePicture:user.photoURL,
+        uid:user.uid})
+    }
+    else setUser(null)
+  })
+}
+export const logOut=()=>{
+  signOut(auth).then((res)=>{
+    console.log('logOut res :',res)
   })
 }
 
 export const loginWithGithub=()=>{
-    const githubProvider=new GithubAuthProvider();
-    return signInWithPopup(auth,githubProvider)
+    const provider=new GithubAuthProvider();
+    return signInWithPopup(auth,provider)
+}
+
+export const loginWithGoogle=()=>{
+    const provider=new GoogleAuthProvider();
+    return signInWithPopup(auth,provider)
+}
+
+export const addTweet=async ({username,message,avatar,mail,id})=>{
+  return addDoc(collection(db,'tweets'), {
+    username,
+    avatar,
+    message,
+    mail,
+    uid:id,
+    likes:0,
+    rts:0,
+  })
+}
+
+export const getAllTweets= async ()=>{
+  let snapshot=await getDocs(collection(db,'tweets'));
+  return snapshot.docs.map(doc=>{
+    let data=doc.data()
+    let id=doc.id
+    return {
+      id,
+      ...data
+    }
+  })
 }

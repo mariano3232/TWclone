@@ -32,6 +32,21 @@
   cursor: pointer;
 }
 
+.google{
+  width: 70%;
+  font-size: large;
+  padding:5px;
+  margin: 10px;
+  border-radius: 20px;
+  border: 1px solid black;
+  background-color: rgb(220, 205, 205);
+  transition:500ms;
+}
+.google:hover{
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.286);
+}
+
 
 /* @media(max-width:500px){
   .main{

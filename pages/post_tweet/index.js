@@ -1,36 +1,58 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "../../styles/post.module.css"
 import Link from "next/link"
 import Avatar from "../../components/avatar"
 import useUser from "../../Hooks/useUser"
+import { addTweet,getAllTweets } from "../firebase/client"
 
-export default function PostTweet(){
+export default function PostTweet({setTweets}){
 
-    let [input,setInput]=useState('')
+    console.log('setTweets :',setTweets)
+    let [message,setMessage]=useState('')
 
-    const user=useUser()
+    let user=useUser()
+
 
     function handleChange(e){
-        setInput(e.target.value)
+        setMessage(e.target.value)
     }
+    function handleSubmit(e){
+        e.preventDefault()
+        console.log('submit')
+        addTweet({
+            username:user.username,
+            message,
+            avatar:user.profilePicture,
+            mail:user.mail,
+            id:user.uid,
+        }).then(()=>{
+            getAllTweets().then(res=>{
+                setTweets(res)
+            })
+        })
+    }
+    
 
     return(
         <div className={styles.container}>
-            <div className={styles.Home}>
+            {/* <div className={styles.Home}>
                 <Link href="/Home">Home</Link>
-            </div>
+            </div> */}
             <div className={styles.user}>
                 <Avatar url={user?.profilePicture}/>
-                <p>{user?.username}</p>
+                <p className={styles.username}>{user?.username}</p>
             </div>
-            <form>
+            <form onSubmit={(e)=>{handleSubmit(e)}}>
                 <textarea
                     type="text"
                     placeholder="twiteate algo master"
                     onChange={(e)=>handleChange(e)}
                     className={styles.textarea}    
                 />
-                <button>post</button>
+                {
+                    (message.length!==0&&user===null)?<p>{'Log in to post   >: ('}</p>:null
+                }
+                <button disabled={message.length===0||user===null} type="submit" className={styles.post} >post</button>
             </form>
         </div>
     )

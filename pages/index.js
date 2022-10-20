@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import {loginWithGithub,authStateChanged} from './firebase/client.js'
+import {loginWithGithub,loginWithGoogle,logOut} from './firebase/client.js'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import useUser from '../Hooks/useUser.js'
-
+import { useRouter } from 'next/router'
 
 export default function Login() {
 
+  const router=useRouter()
 
   // const [user,setUser]=useState({})
 
@@ -17,15 +18,18 @@ export default function Login() {
 
   const user=useUser()
 
-  const handleClick=()=>{
-    loginWithGithub().then(response=>{
-      // let user=response.user
-      // setUser({
-      //   username:user.displayName,
-      //   mail:user.email,
-      //   profilePicture:user.photoURL,
-      // })
-      console.log(response)
+  const handleGitHub=()=>{
+    loginWithGithub().then(res=>{
+      console.log(res)
+      router.replace('/Home')
+    }).catch(err=>{
+      console.log('ERR :',err)
+    })
+  }
+  const handleGoogle=()=>{
+    loginWithGoogle().then(res=>{
+      console.log(res)
+      router.replace('Home')
     }).catch(err=>{
       console.log('ERR :',err)
     })
@@ -41,7 +45,7 @@ export default function Login() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          twClone twClone
+           twClone
         </h1>
         <div>
           <h3>{user?.username}</h3>
@@ -51,8 +55,12 @@ export default function Login() {
     
         <Link href="/Home">Home</Link>
         {
-          user?null:<button className={styles.gitHub} onClick={()=>handleClick()}>Login with github</button>
+          user?null:<button className={styles.gitHub} onClick={()=>handleGitHub()}>Login with github</button>
         }
+        {
+          user?null:<button className={styles.google} onClick={()=>handleGoogle()}>Login with Google</button>
+        }
+        <button onClick={()=>{logOut()}} >Log out</button>
       </main>
 
     </div>

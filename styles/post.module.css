@@ -1,12 +1,12 @@
 
 
 .container{
+    position: relative;
     display: flex;
     flex-direction: column;
     background-color: white;
-    box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187);
     padding: 2rem;
-    width: 50%;
+    width: 100%;
     min-width: 25rem;
     margin: auto;
 }
@@ -27,8 +27,29 @@
     right:10px;
 }
 .user{
+    
     display: flex;
     font-size: larger;
     height: 4rem;
     margin: 1rem;
+}
+.post{
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+    height: 2rem;
+    width: 7rem;
+    border: none;
+    border-radius: 20px;
+    font-size:large;
+    color: white;
+    background-color: rgba(42, 42, 142, 0.919);
+    transition: 300ms;
+}
+.post:hover{
+    cursor: pointer;
+    background-color: rgb(42, 42, 142);
+}
+.username{
+    color: rgba(0, 0, 0, 0.646);
 }
