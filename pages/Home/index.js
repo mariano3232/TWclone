@@ -5,6 +5,7 @@ import styles from '../../styles/timeline.module.css'
 import useUser from '../../Hooks/useUser'
 import { getAllTweets } from '../firebase/client'
 import PostTweet from '../post_tweet'
+import Image from 'next/image'
 
 export default function Home(){
 
@@ -34,7 +35,15 @@ export default function Home(){
             tweets?.map(e=>{
                 return(
                 <div className={styles.tweetContainer} key={e.id}>
-                    <img src={e.avatar} alt="" className={styles.avatar}/>
+                <div className={styles.avatar}>
+                    <Image src={e.avatar}
+                        alt="avatar"
+                        height='50px'
+                        width='50px'
+                        layout='fixed'
+                        className={styles.avatar}                      
+                    />
+                </div>   
                     <div className={styles.text}>
                         <h3>{e.username}</h3>
                         <p>{e.message}</p>
