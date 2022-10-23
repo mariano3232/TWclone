@@ -70,3 +70,6 @@ export const getAllTweets= async ()=>{
     }
   })
 }
+export default function(){
+  
+}
