@@ -20,7 +20,6 @@ export default function Login() {
 
   const handleGitHub=()=>{
     loginWithGithub().then(res=>{
-      console.log(res)
       router.replace('/Home')
     }).catch(err=>{
       console.log('ERR :',err)
@@ -28,7 +27,6 @@ export default function Login() {
   }
   const handleGoogle=()=>{
     loginWithGoogle().then(res=>{
-      console.log(res)
       router.replace('Home')
     }).catch(err=>{
       console.log('ERR :',err)
@@ -54,9 +52,6 @@ export default function Login() {
         </div>
     
         <Link href="/Home">Home</Link>
-        {
-          user?null:<button className={styles.gitHub} onClick={()=>handleGitHub()}>Login with github</button>
-        }
         {
           user?null:<button className={styles.google} onClick={()=>handleGoogle()}>Login with Google</button>
         }

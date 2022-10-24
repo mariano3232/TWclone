@@ -15,6 +15,12 @@ export default function Home(){
 
     console.log('user :',user)
 
+    function toDateTime(secs) {
+        var t = new Date(1970, 0, 1); // Epoch
+        t.setSeconds(secs);
+        return t;
+    }
+
     getAllTweets().then(e=>{
         console.log('getalltweets',e)
     })
@@ -33,9 +39,14 @@ export default function Home(){
         {/* <Link href="/post_tweet"><button className={styles.button}>Post</button></Link> */}
         {
             tweets?.map(e=>{
+                let date=toDateTime(e.createdAt?.seconds)
+                console.log('date :',date)
                 return(
                 <div className={styles.tweetContainer} key={e.id}>
                 <div className={styles.avatar}>
+                {
+                    e.createdAt?console.log('createdAt:',e.createdAt):null
+                }
                     <Image src={e.avatar}
                         alt="avatar"
                         height='50px'
@@ -45,7 +56,10 @@ export default function Home(){
                     />
                 </div>   
                     <div className={styles.text}>
-                        <h3>{e.username}</h3>
+                        <div className={styles.flex}>
+                            <h3>{e.username}</h3>
+                            {/* <p className={styles.date}>{date}</p> */}
+                        </div>
                         <p>{e.message}</p>
                     </div>
                 </div>

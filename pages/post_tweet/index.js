@@ -7,7 +7,6 @@ import { addTweet,getAllTweets } from "../firebase/client"
 
 export default function PostTweet({setTweets}){
 
-    console.log('setTweets :',setTweets)
     let [message,setMessage]=useState('')
 
     let user=useUser()
@@ -18,7 +17,7 @@ export default function PostTweet({setTweets}){
     }
     function handleSubmit(e){
         e.preventDefault()
-        console.log('submit')
+        document.getElementById("text").value = "";
         addTweet({
             username:user.username,
             message,
@@ -47,7 +46,8 @@ export default function PostTweet({setTweets}){
                     type="text"
                     placeholder="twiteate algo master"
                     onChange={(e)=>handleChange(e)}
-                    className={styles.textarea}    
+                    className={styles.textarea}
+                    id='text' 
                 />
                 {
                     (message.length!==0&&user===null)?<p>{'Log in to post   >: ('}</p>:null

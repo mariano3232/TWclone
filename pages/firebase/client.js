@@ -1,7 +1,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GithubAuthProvider,onAuthStateChanged,signOut,GoogleAuthProvider} from 'firebase/auth';
-import { getFirestore, getDocs, addDoc, collection } from "firebase/firestore"
+import { getFirestore, getDocs, addDoc, collection, Timestamp } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJ6H2WuqHawCmrX981MpTHtqwm_WIgKfI",
@@ -56,12 +56,13 @@ export const addTweet=async ({username,message,avatar,mail,id})=>{
     uid:id,
     likes:0,
     rts:0,
+    createdAt:Timestamp.fromDate(new Date()),
   })
 }
 
 export const getAllTweets= async ()=>{
   let snapshot=await getDocs(collection(db,'tweets'));
-  return snapshot.docs.map(doc=>{
+  let tweets = snapshot.docs.map(doc=>{
     let data=doc.data()
     let id=doc.id
     return {
@@ -69,7 +70,32 @@ export const getAllTweets= async ()=>{
       ...data
     }
   })
+  let sortedTweets=tweets.sort((a,b)=>{
+    if (a.createdAt.seconds<b.createdAt.seconds) {return 1}
+    if (a.createdAt.seconds>b.createdAt.seconds) {return -1}
+  })
+  return sortedTweets
 }
+
+export const getLatestTweets= ()=>{
+  return db.collection('tweets')
+    .orderBy("createdAt","desc")
+    .get()
+    .then(({docs})=>{
+      docs.map(doc=>{
+        let data=doc.data()
+        let id=doc.id
+        let {createdAt}=data
+
+        return {
+          ...data,
+          id,
+          createdAt:+createdAt.toDate()
+        }
+      })
+    })
+}
+
 export default function(){
-  
+
 }
