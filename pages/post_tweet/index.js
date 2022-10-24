@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
+import Image from 'next/image'
 import styles from "../../styles/post.module.css"
-import Link from "next/link"
 import Avatar from "../../components/avatar"
 import useUser from "../../Hooks/useUser"
 import { addTweet,getAllTweets } from "../firebase/client"
+import spinner from '../../public/loading.svg'
+import Spinner from "../../components/spinner"
 
 export default function PostTweet({setTweets}){
+    console.log('loading :',spinner)
+
+    let [loading,setLoading]=useState(false)
 
     let [message,setMessage]=useState('')
 
@@ -17,16 +22,23 @@ export default function PostTweet({setTweets}){
     }
     function handleSubmit(e){
         e.preventDefault()
+        setLoading(true)
+        let messageAux=message;
+        setMessage("")
         document.getElementById("text").value = "";
         addTweet({
             username:user.username,
-            message,
+            message:messageAux,
             avatar:user.profilePicture,
             mail:user.mail,
             id:user.uid,
         }).then(()=>{
             getAllTweets().then(res=>{
                 setTweets(res)
+                setTimeout(()=>{
+                    setLoading(false)
+                    setTweets(res)
+                },1000)
             })
         })
     }
@@ -34,11 +46,10 @@ export default function PostTweet({setTweets}){
 
     return(
         <div className={styles.container}>
-            {/* <div className={styles.Home}>
-                <Link href="/Home">Home</Link>
-            </div> */}
             <div className={styles.user}>
-                <Avatar url={user?.profilePicture}/>
+                {
+                    user?<Avatar url={user.profilePicture}/>:null
+                }    
                 <p className={styles.username}>{user?.username}</p>
             </div>
             <form onSubmit={(e)=>{handleSubmit(e)}}>
@@ -52,7 +63,11 @@ export default function PostTweet({setTweets}){
                 {
                     (message.length!==0&&user===null)?<p>{'Log in to post   >: ('}</p>:null
                 }
-                <button disabled={message.length===0||user===null} type="submit" className={styles.post} >post</button>
+
+                {
+                    loading?<div className={styles.spinner}><Spinner/></div>:
+                    <button disabled={message.length===0||user===null} type="submit" className={styles.post} >post</button>
+                }
             </form>
         </div>
     )

@@ -1,7 +1,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GithubAuthProvider,onAuthStateChanged,signOut,GoogleAuthProvider} from 'firebase/auth';
-import { getFirestore, getDocs, addDoc, collection, Timestamp } from "firebase/firestore"
+import { getFirestore, getDocs, addDoc,deleteDoc ,doc , collection, Timestamp } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJ6H2WuqHawCmrX981MpTHtqwm_WIgKfI",
@@ -18,6 +18,8 @@ initializeApp(firebaseConfig)
 const db = getFirestore();
 
 const auth = getAuth();
+
+//Authentication
 
 export const authStateChanged = (setUser) =>{
   return onAuthStateChanged(auth, (user)=>{
@@ -47,7 +49,9 @@ export const loginWithGoogle=()=>{
     return signInWithPopup(auth,provider)
 }
 
-export const addTweet=async ({username,message,avatar,mail,id})=>{
+//Firestore (DataBase)
+
+export const addTweet = async ({username,message,avatar,mail,id})=>{
   return addDoc(collection(db,'tweets'), {
     username,
     avatar,
@@ -57,7 +61,21 @@ export const addTweet=async ({username,message,avatar,mail,id})=>{
     likes:0,
     rts:0,
     createdAt:Timestamp.fromDate(new Date()),
+  }).then(()=>{
+    console.log('Post successfull!')
+  }).catch((err)=>{
+    console.log('ERR :',err)
   })
+}
+
+export const deleteTweet= async (id)=>{
+  console.log('id :',id)
+    return deleteDoc(doc(db, "tweets", id)).then(res=>{
+      console.log('Deleted successfully')
+    })
+    .catch(err=>{
+      console.log("Err ;",err)
+    })
 }
 
 export const getAllTweets= async ()=>{
@@ -75,25 +93,6 @@ export const getAllTweets= async ()=>{
     if (a.createdAt.seconds>b.createdAt.seconds) {return -1}
   })
   return sortedTweets
-}
-
-export const getLatestTweets= ()=>{
-  return db.collection('tweets')
-    .orderBy("createdAt","desc")
-    .get()
-    .then(({docs})=>{
-      docs.map(doc=>{
-        let data=doc.data()
-        let id=doc.id
-        let {createdAt}=data
-
-        return {
-          ...data,
-          id,
-          createdAt:+createdAt.toDate()
-        }
-      })
-    })
 }
 
 export default function(){

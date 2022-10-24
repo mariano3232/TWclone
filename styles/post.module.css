@@ -50,6 +50,11 @@
     cursor: pointer;
     background-color: rgb(42, 42, 142);
 }
+.spinner{
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+}
 .username{
     color: rgba(0, 0, 0, 0.646);
 }
