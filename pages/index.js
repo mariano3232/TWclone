@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import {loginWithGithub,loginWithGoogle,logOut} from './firebase/client.js'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Login.module.css'
 import { useEffect, useState } from 'react'
 import useUser from '../Hooks/useUser.js'
 import { useRouter } from 'next/router'
-
+import Image from 'next/image'
+import homeIcon from '../public/home.svg'
+import googleIcon from '../public/google.svg'
 export default function Login() {
 
   const router=useRouter()
@@ -46,16 +48,37 @@ export default function Login() {
            twClone
         </h1>
         <div>
-          <h3>{user?.username}</h3>
-          <p>{user?.mail}</p>
-          {/* <img src={user?.profilePicture} alt="" height="100px"/> */}
+          <h1>{user?.username}</h1>
         </div>
-    
-        <Link href="/Home">Home</Link>
         {
-          user?null:<button className={styles.google} onClick={()=>handleGoogle()}>Login with Google</button>
+          user?null:
+          <div className={styles.google} onClick={()=>handleGoogle()}>
+            <div className={styles.g}>
+              <Image src={googleIcon}
+                    height='35px'
+                    width='35px'
+                    layout='fixed'                      
+              />
+            </div>
+            <p>Login with Google</p>
+          </div>
         }
-        <button onClick={()=>{logOut()}} >Log out</button>
+
+        <Link href="/Home">
+          <button className={styles.button}>
+            Home
+            {
+            <div className={styles.house}>
+              <Image src={homeIcon}
+                  height='35px'
+                  width='35px'
+                  layout='fixed'                      
+              />
+            </div>
+            }
+          </button>
+        </Link>
+        <button onClick={()=>{logOut()}} className={styles.button} >Log out</button>
       </main>
 
     </div>

@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import styles from '../../styles/timeline.module.css'
+import styles from '../../styles/Home.module.css'
 import useUser from '../../Hooks/useUser'
 import { deleteTweet, getAllTweets } from '../firebase/client'
 import PostTweet from '../post_tweet'
 import Image from 'next/image'
+import Nav from '../../components/Nav'
 
 export default function Home(){
 
@@ -35,7 +36,10 @@ export default function Home(){
     }
 
     return (
+    <div className={styles.layout}>
+        {/* <Nav/> */}
     <div className={styles.container}>
+        
         <PostTweet setTweets={setTweets}/>
         <Link href="/">Login</Link>
         <h1>This is the timeline of {user?.username}</h1>
@@ -46,7 +50,7 @@ export default function Home(){
                 return(
                 <div className={styles.tweetContainer} key={e.id}>
                     {
-                        user.uid===e.uid?
+                        user&&user?.uid===e.uid?
                         <button value={e.id} onClick={(e)=> handleDelete(e)} className={styles.delete}>x</button>
                         :null
                     }
@@ -70,6 +74,8 @@ export default function Home(){
                 )
             })
         }
+    </div>
+
     </div>
     )
 }

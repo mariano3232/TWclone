@@ -1,55 +1,72 @@
-.container {
-  display: flex;
-  justify-content: center;
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187);
+    padding: 2rem;
+    border-radius:0 0 20px 20px;
+    width: 50%;
+    min-width: 25rem;
+    margin: auto;
 }
 
-.main {
-  width: 450px;
-  height: 90vh;
-  margin-top: 5vh;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187) ;
-  border-radius: 10px;
+.button{
+    position: fixed;
+    right: 20px;
+    top:20px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid black;
+    color: white;
+    border-radius: 50px;
+    background-color:rgb(42, 42, 142) ;
 }
-.gitHub{
-  width: 70%;
-  font-size: x-large;
-  padding:5px;
-  margin: 10px;
-  color: white;
-  border-radius: 20px;
-  border: none;
-  background-color: black;
-  transition:500ms;
-}
-.gitHub:hover{
-  background-color: rgba(0, 0, 0, 0.856);
-  cursor: pointer;
+.button:hover{
+    cursor: pointer;
 }
 
-.google{
-  width: 70%;
-  font-size: large;
-  padding:5px;
-  margin: 10px;
-  border-radius: 20px;
-  border: 1px solid black;
-  background-color: rgb(220, 205, 205);
-  transition:500ms;
-}
-.google:hover{
-  cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.286);
+.tweetContainer{
+    position: relative;
+    width: 100%;
+    font-size:small;
+    display: flex;
+    /* border: 2px solid blue; */
+    border-top: 1px solid rgba(128, 128, 128, 0.592);
+    transition: 500ms  ;
 }
 
+.text{
+    width: 100%;
+    overflow-wrap: anywhere;
+}
 
-/* @media(max-width:500px){
-  .main{
-    
-  }
-} */
+.avatar{
+    margin: 15px;
+    border-radius: 100%;
+}
+
+.flex{
+    display: flex;
+}
+.date{
+    color: grey;
+    font-size: 110%;
+    margin: 5px;
+    margin-top: 15px;
+}
+.delete{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    color: grey;
+    border: none;
+    padding: 0;
+    font-size: 200%;
+    transition: 300ms;
+}
+.delete:hover{
+    cursor: pointer;
+    color: red
+}

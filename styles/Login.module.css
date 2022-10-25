@@ -1,0 +1,88 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.main {
+  width: 450px;
+  height: 90vh;
+  margin-top: 5vh;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187) ;
+  border-radius: 10px;
+}
+.gitHub{
+  width: 70%;
+  font-size: x-large;
+  padding:5px;
+  margin: 10px;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  background-color: black;
+  transition:500ms;
+}
+.gitHub:hover{
+  background-color: rgba(0, 0, 0, 0.856);
+  cursor: pointer;
+}
+
+.google{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 60%;
+  font-weight: 200;
+  color: rgb(41, 48, 108);
+  border-radius: 20px;
+  border: 0;
+  box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187);
+  background-color: white;
+  transition:500ms;
+}
+.google:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.g{
+  position: relative;
+  top: 10px;
+}
+
+
+.button{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    background-color: rgba(42, 42, 142, 0.861);
+    padding: 7px;
+    width: 60%;
+    height: 2.5rem;
+    margin: auto;
+    border: none;
+    color: white;
+    font-size: 120%;
+    border-radius: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: 500ms;
+}
+.button:hover{
+    background-color: rgba(42, 42, 142, 0.509);
+    cursor: pointer;
+}
+.house{
+  position: relative;
+  bottom: 5px;
+}
+
+
+/* @media(max-width:500px){
+  .main{
+    
+  }
+} */
