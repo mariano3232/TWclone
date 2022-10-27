@@ -3,7 +3,7 @@
 } */
 @media(max-width:800px){
     .layout{
-        height: fit-content;
+        height: 100vh;
     }
   }
 
