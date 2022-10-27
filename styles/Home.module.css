@@ -3,9 +3,7 @@
 } */
 @media(max-width:800px){
     .layout{
-        display: flex;
-        flex-direction: column;
-        height: 100%;
+        height: fit-content;
     }
   }
 
