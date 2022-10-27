@@ -12,21 +12,15 @@ export default function Login() {
 
   const router=useRouter()
 
-  // const [user,setUser]=useState({})
-
-  // useEffect(()=>{
-  //   authStateChanged(setUser)
-  // },[])
-
   const user=useUser()
 
-  const handleGitHub=()=>{
-    loginWithGithub().then(res=>{
-      router.replace('/Home')
-    }).catch(err=>{
-      console.log('ERR :',err)
-    })
-  }
+  // const handleGitHub=()=>{
+  //   loginWithGithub().then(res=>{
+  //     router.replace('/Home')
+  //   }).catch(err=>{
+  //     console.log('ERR :',err)
+  //   })
+  // }
   const handleGoogle=()=>{
     loginWithGoogle().then(res=>{
       router.replace('Home')

@@ -36,6 +36,7 @@ export const authStateChanged = (setUser) =>{
 export const logOut=()=>{
   signOut(auth).then((res)=>{
     console.log('logOut res :',res)
+    return 'kkk'
   })
 }
 

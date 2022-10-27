@@ -1,51 +1,57 @@
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import styles from '../../styles/Home.module.css'
-import useUser from '../../Hooks/useUser'
-import { deleteTweet, getAllTweets } from '../firebase/client'
-import PostTweet from '../post_tweet'
-import Image from 'next/image'
-import Nav from '../../components/Nav'
+import { useEffect,useState } from "react";
+import useUser from "../../Hooks/useUser";
+import styles from '../../styles/profile.module.css'
+import Image from "next/image";
+import { getAllTweets } from "../firebase/client";
+import { deleteTweet } from "../firebase/client";
+import Nav from "../../components/Nav";
 
-export default function Home(){
-
-    let [tweets,setTweets]=useState([])
+export default function Profile(){
 
     let user=useUser()
+    console.log('user :',user)
+    let [tweets,setTweets]=useState(null)
+
+    useEffect(()=>{
+        getAllTweets().then(tweets=>{
+            console.log('tweetsAntes :',tweets)
+            let userTweets=tweets.filter(tweet=>(tweet?.uid===user?.uid))
+            setTweets(userTweets);
+        })
+    },[user])
 
     function toDateTime(secs) {
         var t = new Date(1970, 0, 1);
         t.setSeconds(secs);
         return t;
     }
-
-    useEffect(()=>{
-        getAllTweets().then(res=>{
-            setTweets(res)
-        })
-    },[])
-
     const handleDelete=(e)=>{
         let id=e.target.value;
         deleteTweet(id).then(()=>{
-            getAllTweets().then(res=>{
-                setTweets(res)
+            getAllTweets().then(tweets=>{
+                console.log('tweetsAntes :',tweets)
+                let userTweets=tweets.filter(tweet=>(tweet?.uid===user?.uid))
+                setTweets(userTweets);
             })
         })
     }
-
     return (
-    <div className={styles.layout}>
-        
-    <div className={styles.container}>
-        
-        <PostTweet setTweets={setTweets}/>
-        <Link href="/">Login</Link>
-        <h1>This is the timeline of {user?.username}</h1>
+        <div className={styles.layout}>
+
+        <div className={styles.container}>
+        {
+            user?
+                <div className={styles.contain}>
+                    <Image src={user.profilePicture} height='100px' width='100px' className={styles.avatar}/>
+                    <h1>{user?.username}</h1>
+                </div>           
+            :null
+        }
         {
             tweets?.map(e=>{
                 let date=toDateTime(e.createdAt?.seconds)
                 return(
+                
                 <div className={styles.tweetContainer} key={e.id}>
                     {
                         user&&user?.uid===e.uid?
@@ -72,8 +78,8 @@ export default function Home(){
                 )
             })
         }
-    </div>
-    <Nav setTweets={setTweets}/>
-    </div>
+        </div>
+        <Nav/>
+        </div>
     )
 }

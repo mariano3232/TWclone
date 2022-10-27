@@ -1,13 +1,7 @@
-/* .layout{
-    
-} */
-@media(max-width:800px){
-    .layout{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-  }
+.layout{
+    display: flex;
+    flex-direction: column;
+}
 
 .container{
     display: flex;
@@ -20,20 +14,26 @@
     min-width: 25rem;
     margin: auto;
 }
-
-.button{
-    position: fixed;
-    right: 20px;
-    top:20px;
-    height: 40px;
-    width: 40px;
-    border: 1px solid black;
-    color: white;
-    border-radius: 50px;
-    background-color:rgb(42, 42, 142) ;
+.flex{
+    display: flex;
 }
-.button:hover{
-    cursor: pointer;
+
+.contain{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187);
+    padding: 2rem;
+    border-radius:0 0 20px 20px;
+    width: 50%;
+    min-width: 25rem;
+    margin: auto;
 }
 
 .tweetContainer{
@@ -56,9 +56,6 @@
     border-radius: 100%;
 }
 
-.flex{
-    display: flex;
-}
 .date{
     color: grey;
     font-size: 110%;

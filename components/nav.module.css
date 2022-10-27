@@ -12,6 +12,7 @@
     gap: 3rem;
     box-shadow:0px 10px 25px rgba(0, 0, 0, 0.187);
     width: 20%;
+    transition: 1s;
 }
 
 .button{
@@ -29,5 +30,20 @@
 .button:hover{
     background-color: rgba(42, 42, 142, 0.509);
     cursor: pointer;
+}
+
+@media(max-width:800px){
+  .container{
+    position:sticky;
+    bottom: 0px;
+    display: flex;
+    z-index: 999;
+    flex-direction: row;
+    width: 50%;
+    min-width: 24rem;
+    margin: auto;
+    height: 10%;
+    margin-top: auto
+  }
 }
 
