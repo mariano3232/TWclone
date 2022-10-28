@@ -35,7 +35,7 @@
 @media(max-width:800px){
   .container{
     position:sticky;
-    bottom: 0px;
+    bottom: 0px !important;
     display: flex;
     z-index: 999;
     flex-direction: row;
