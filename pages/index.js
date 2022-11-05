@@ -41,6 +41,7 @@ export default function Login() {
         <h1 className={styles.title}>
            twClone
         </h1>
+        <div className={styles.logo}/>
         <div>
           <h1>{user?.username}</h1>
         </div>

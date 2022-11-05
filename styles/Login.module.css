@@ -79,6 +79,12 @@
   position: relative;
   bottom: 5px;
 }
+.logo{
+  width: 10rem;
+  height: 10rem;
+  background-color: rgba(42, 42, 142);
+  clip-path: polygon(49% 4%, 73% 56%, 89% 37%, 100% 63%, 88% 56%, 66% 100%, 49% 88%, 32% 100%, 0 62%, 23% 68%);
+}
 
 
 /* @media(max-width:500px){
